@@ -10,9 +10,12 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.log4testng.Logger;
 
+import com.testvagrant.pojo.WeatherPojo;
 import com.testvagrant.ui.helper.WaitHelper;
 
 public class WeatherPage {
+	String humidity = "";
+	String temp = "";
 	private static Logger log = Logger.getLogger(HomePage.class);
 	public WebDriver driver;
 	WaitHelper wait;
@@ -60,18 +63,12 @@ public class WeatherPage {
 
 	public void storeWeatherInfo(String cityName) {
 		wait.waitForElement(driver, textHumidityPercentage, 5);
-		System.out.println(textHumidityPercentage.getText());
-		System.out.println(textTemperature.getText());
-
-	}
-
-	public static void main(String args[]) {
-		String humidity = "Humidity: 71%";
-		String arr[] = humidity.split(": ");
-
-		for (int i = 0; i < arr.length; i++) {
-			System.out.println(arr[i]);
-		}
+		humidity = textHumidityPercentage.getText();
+		temp = textTemperature.getText();
+		temp = temp.replaceAll("[^\\d]", "");
+		humidity = humidity.replaceAll("[^\\d]", "");
+		WeatherPojo pojo = new WeatherPojo(Double.parseDouble(temp), Double.parseDouble(humidity));
+		System.out.println(pojo.toString());
 
 	}
 
