@@ -1,4 +1,4 @@
-package com.testvagrant.ui.helper;
+package com.testvagrant.helper;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -28,6 +28,7 @@ public class BaseWeb {
 			driver.manage().window().maximize();
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		}
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.get(websiteURL);
 		return driver;
 

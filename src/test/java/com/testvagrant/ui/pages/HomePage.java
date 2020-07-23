@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.log4testng.Logger;
 
-import com.testvagrant.ui.helper.WaitHelper;
+import com.testvagrant.helper.WaitHelper;
 
 public class HomePage {
 	private static Logger log = Logger.getLogger(HomePage.class);

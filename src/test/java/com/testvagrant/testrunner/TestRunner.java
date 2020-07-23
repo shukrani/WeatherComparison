@@ -3,17 +3,19 @@ package com.testvagrant.testrunner;
 
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
-import com.testvagrant.ui.helper.BaseWeb;
+import com.testvagrant.helper.BaseWeb;
+import com.testvagrant.helper.CsvFileUtils;
 
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(features = { "src/test/resources/features" }, glue = {
-		"com/testvagrant/stepdefinitions" }, tags = "@pinCity", plugin = {
+		"com/testvagrant/stepdefinitions" }, tags = "@weatherSanity", plugin = {
 				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
 				"json:target/cucumber-report.json" })
 
@@ -30,7 +32,6 @@ public class TestRunner extends AbstractTestNGCucumberTests {
 		BaseWeb.getDriver();
 	}
 
-	@AfterMethod
 	@AfterTest
 	public void tearDown() {
 		BaseWeb.closeBrowser();
@@ -40,6 +41,11 @@ public class TestRunner extends AbstractTestNGCucumberTests {
 	public void cleanup(ITestResult result) {
 		BaseWeb.takeScreenshot(result.getName());
 
+	}
+
+	@AfterSuite
+	public void cleanResources() {
+		CsvFileUtils.close();
 	}
 
 }

@@ -2,7 +2,10 @@ package com.testvagrant.stepdefinitions;
 
 import org.openqa.selenium.WebDriver;
 
-import com.testvagrant.ui.helper.BaseWeb;
+import com.opencsv.CSVWriter;
+import com.testvagrant.helper.BaseWeb;
+import com.testvagrant.helper.CsvFileUtils;
+import com.testvagrant.pojo.WeatherPojo;
 import com.testvagrant.ui.pages.HomePage;
 import com.testvagrant.ui.pages.WeatherPage;
 
@@ -11,6 +14,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class WebSteps {
+
 	private HomePage homePage;
 	private WeatherPage weatherPage;
 	public static WebDriver driver = BaseWeb.getDriver();
@@ -29,7 +33,7 @@ public class WebSteps {
 
 	@Then("^weather section gets open$")
 	public void weather_section_gets_open() throws Throwable {
-
+		weatherPage.verifyWeatherPage();
 	}
 
 	@When("I  pin {string} city")
@@ -44,9 +48,11 @@ public class WebSteps {
 		weatherPage.verifyPinCity(cityname);
 	}
 
-	@And("I can check the detailed weather information for the {string}")
+	@And("I can verify and store detailed weather information for the {string}")
 	public void i_can_check_the_detailed_weather_information_for_the(String cityname) throws Throwable {
-		weatherPage.storeWeatherInfo(cityname);
+		WeatherPojo pojo = weatherPage.convertoWeatherPojo(cityname);
+		CSVWriter writer = CsvFileUtils.getCSVWriter(Constants.WEB_RESULT_FILE);
+		CsvFileUtils.writeWeatherObject(writer, pojo);
 	}
 
 }

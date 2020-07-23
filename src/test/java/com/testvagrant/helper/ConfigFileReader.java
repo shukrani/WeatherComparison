@@ -1,4 +1,4 @@
-package com.testvagrant.ui.helper;
+package com.testvagrant.helper;
 
 import java.io.FileReader;
 import java.io.IOException;
