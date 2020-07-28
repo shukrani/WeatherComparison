@@ -9,7 +9,6 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
 import com.testvagrant.helper.BaseWeb;
-import com.testvagrant.helper.CsvFileUtils;
 
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
@@ -45,7 +44,7 @@ public class TestRunner extends AbstractTestNGCucumberTests {
 
 	@AfterSuite
 	public void cleanResources() {
-		CsvFileUtils.close();
+
 	}
 
 }

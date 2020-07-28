@@ -2,33 +2,48 @@ package com.testvagrant.pojo;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherPojo implements Serializable {
 
 	private static final double TEMP_VARIANCE = 2d;
 	private static final double HUMIDITY_VARIANCE = 10d;
 
 	private static final long serialVersionUID = -299482035708790407L;
-	double temperature;
-	double humidityPercentage;
+
+//	@JsonProperty("main.temp")
+//	double temperature;
+//
+//	@JsonProperty("main.humidity")
+//	double humidityPercentage;
+
+	@JsonProperty("main")
+	private WeatherData data;
+
+	@JsonProperty("name")
 	String cityName;
+
+	public WeatherPojo() {
+
+	}
 
 	public WeatherPojo(double temperature, double humidityPercentage, String cityName) {
 		super();
-		this.temperature = temperature;
-		this.humidityPercentage = humidityPercentage;
+		data = new WeatherData();
+
+		data.setTemperature(temperature);
+		data.setHumidityPercentage(humidityPercentage);
 		this.cityName = cityName;
 	}
 
-	public double getPercentage() {
-		return temperature;
-	}
-
 	public double getTemperature() {
-		return temperature;
+		return this.data.getTemperature();
 	}
 
 	public void setTemperature(Double temperature) {
-		this.temperature = temperature;
+		data.setTemperature(temperature);
 	}
 
 	public String getCityName() {
@@ -39,16 +54,12 @@ public class WeatherPojo implements Serializable {
 		this.cityName = cityName;
 	}
 
-	public void setPercentage(Double percentage) {
-		this.temperature = percentage;
-	}
-
 	public double getHumidityPercentage() {
-		return humidityPercentage;
+		return this.data.getHumidityPercentage();
 	}
 
 	public void setHumidityPercentage(Double humidityPercentage) {
-		this.humidityPercentage = humidityPercentage;
+		this.data.setHumidityPercentage(humidityPercentage);
 	}
 
 	public boolean equals(Object obj) {
@@ -56,14 +67,14 @@ public class WeatherPojo implements Serializable {
 			return false;
 		}
 		WeatherPojo o = (WeatherPojo) obj;
-		double tempDiff = Math.abs(this.temperature - o.temperature);
-		double humiditydiff = Math.abs(this.humidityPercentage - o.humidityPercentage);
+		double tempDiff = Math.abs(this.getTemperature() - o.getTemperature());
+		double humiditydiff = Math.abs(this.getHumidityPercentage() - o.getHumidityPercentage());
 
 		return tempDiff < TEMP_VARIANCE && humiditydiff < HUMIDITY_VARIANCE && this.cityName.equals(o);
 	}
 
 	public String[] toArray() {
-		return new String[] { cityName, String.valueOf(temperature), String.valueOf(humidityPercentage) };
+		return new String[] { cityName, String.valueOf(getTemperature()), String.valueOf(getHumidityPercentage()) };
 	}
 
 	public static WeatherPojo fromArray(String[] arr) {
@@ -72,8 +83,46 @@ public class WeatherPojo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "City" + cityName + "Temp=" + temperature + "humidity=" + humidityPercentage;
+		return "City=" + cityName + "Temp=" + getTemperature() + "humidity=" + getHumidityPercentage();
 
+	}
+
+	public boolean isEquals(WeatherPojo pojo, double tempvariance, double humidityvariance) {
+
+		if (pojo == null) {
+			return false;
+		}
+
+		double tempDiff = Math.abs(this.getTemperature() - pojo.getTemperature());
+		double humiditydiff = Math.abs(this.getHumidityPercentage() - pojo.getHumidityPercentage());
+
+		return tempDiff < tempvariance && humiditydiff < humidityvariance;
+	}
+
+}
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+class WeatherData {
+	@JsonProperty("temp")
+	private double temperature;
+
+	@JsonProperty("humidity")
+	private double humidityPercentage;
+
+	public double getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature(double temperature) {
+		this.temperature = temperature;
+	}
+
+	public double getHumidityPercentage() {
+		return humidityPercentage;
+	}
+
+	public void setHumidityPercentage(double humidityPercentage) {
+		this.humidityPercentage = humidityPercentage;
 	}
 
 }

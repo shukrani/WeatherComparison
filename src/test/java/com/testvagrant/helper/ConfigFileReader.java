@@ -7,7 +7,7 @@ import java.util.Properties;
 import org.testng.log4testng.Logger;
 
 public class ConfigFileReader {
-	private static Logger log = Logger.getLogger(ConfigFileReader.class);
+	private static final Logger logger = Logger.getLogger(ConfigFileReader.class);
 	static Properties properties;
 	static FileReader reader;
 
@@ -17,7 +17,7 @@ public class ConfigFileReader {
 			reader = new FileReader("src/test/resources/configuration.properties");
 			properties.load(reader);
 		} catch (IOException e) {
-			log.debug(e.getMessage());
+			logger.error(e.getMessage());
 		}
 
 	}

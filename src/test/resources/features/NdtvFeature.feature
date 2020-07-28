@@ -30,7 +30,7 @@ Then login form gets open
      Then user is able to see the correct results
     Examples: 
       | temp_variance | humidity_variance | city_name|
-      | 2             | 10                | pune     |
+      | 4          | 10               | pune     |
    
   
     

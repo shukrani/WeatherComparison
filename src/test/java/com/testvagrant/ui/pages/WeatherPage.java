@@ -16,7 +16,7 @@ import com.testvagrant.pojo.WeatherPojo;
 public class WeatherPage {
 	String humidity = "";
 	String temp = "";
-	private static Logger log = Logger.getLogger(HomePage.class);
+	Logger logger = Logger.getLogger(this.getClass());
 	public WebDriver driver;
 	WaitHelper wait;
 	@FindBy(id = "searchBox")

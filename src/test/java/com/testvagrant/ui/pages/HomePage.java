@@ -9,7 +9,7 @@ import org.testng.log4testng.Logger;
 import com.testvagrant.helper.WaitHelper;
 
 public class HomePage {
-	private static Logger log = Logger.getLogger(HomePage.class);
+	Logger logger = Logger.getLogger(this.getClass());
 	public WebDriver driver;
 	WaitHelper wait;
 	private static HomePage Homepage_instance = null;

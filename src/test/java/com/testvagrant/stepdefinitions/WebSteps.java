@@ -1,10 +1,10 @@
 package com.testvagrant.stepdefinitions;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.log4testng.Logger;
 
-import com.opencsv.CSVWriter;
 import com.testvagrant.helper.BaseWeb;
-import com.testvagrant.helper.CsvFileUtils;
+import com.testvagrant.helper.WeatherDataMap;
 import com.testvagrant.pojo.WeatherPojo;
 import com.testvagrant.ui.pages.HomePage;
 import com.testvagrant.ui.pages.WeatherPage;
@@ -14,7 +14,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class WebSteps {
-
+	Logger logger = Logger.getLogger(this.getClass());
 	private HomePage homePage;
 	private WeatherPage weatherPage;
 	public static WebDriver driver = BaseWeb.getDriver();
@@ -51,8 +51,7 @@ public class WebSteps {
 	@And("I can verify and store detailed weather information for the {string}")
 	public void i_can_check_the_detailed_weather_information_for_the(String cityname) throws Throwable {
 		WeatherPojo pojo = weatherPage.convertoWeatherPojo(cityname);
-		CSVWriter writer = CsvFileUtils.getCSVWriter(Constants.WEB_RESULT_FILE);
-		CsvFileUtils.writeWeatherObject(writer, pojo);
+		WeatherDataMap.add(cityname + "ui", pojo);
 	}
 
 }

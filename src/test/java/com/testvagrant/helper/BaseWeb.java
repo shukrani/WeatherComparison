@@ -2,6 +2,8 @@ package com.testvagrant.helper;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -13,6 +15,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class BaseWeb {
 	static WebDriver driver;
 	static String browserName, websiteURL;
+	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	public static WebDriver getDriver() {
 		if (driver == null) {
@@ -41,6 +44,7 @@ public class BaseWeb {
 
 	public static void setupEnvironment() {
 		String osName = System.getProperty("os.name").toLowerCase();
+		System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n");
 		if (osName.contains("mac")) {
 			System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver");
 			System.setProperty("webdriver.gecko.driver", "src/test/resources/geckodriver");
@@ -71,11 +75,11 @@ public class BaseWeb {
 			File source = ts.getScreenshotAs(OutputType.FILE);
 
 			FileUtils.copyFile(source, new File(fileName));
+			logger.log(Level.INFO, "Screenshot taken" + fileName);
 
-			System.out.println("Screenshot taken - " + fileName);
 		} catch (Exception e) {
 
-			System.out.println("Exception while taking screenshot " + e.getMessage());
+			logger.log(Level.WARNING, "Exception while taking screenshot " + e.getMessage());
 		}
 	}
 
